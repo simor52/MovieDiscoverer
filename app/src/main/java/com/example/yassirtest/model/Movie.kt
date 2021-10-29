@@ -8,12 +8,9 @@ import com.squareup.moshi.JsonClass
 @Entity
 @JsonClass(generateAdapter = true)
 data class Movie (
+    var page : Int = 0,
     @field:Json(name = "id") @PrimaryKey val id : Int,
-    @field:Json(name = "adult") val adult : Boolean,
-    @field:Json(name = "backdrop_path") val backdropPath : String,
-    //@field:Json(name = "genre_ids") val genreIds : List<Int>,
-    @field:Json(name = "original_language") val originalLanguage : String,
-    @field:Json(name = "original_title") val originalTitle : String,
+    @field:Json(name = "genre_ids") val genreIds : List<Int>,
     @field:Json(name = "overview") val overview : String,
     @field:Json(name = "popularity") val popularity : Double,
     @field:Json(name = "poster_path") val posterPath : String,

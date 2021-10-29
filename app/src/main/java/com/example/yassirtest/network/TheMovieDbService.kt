@@ -1,6 +1,6 @@
 package com.example.yassirtest.network
 
-import com.example.yassirtest.model.Movie
+import com.example.yassirtest.model.MovieInfo
 import com.example.yassirtest.model.MovieResponse
 import com.skydoves.sandwich.ApiResponse
 import retrofit2.http.GET
@@ -18,5 +18,5 @@ interface TheMovieDbService {
     suspend fun fetchMovieInfo(
         @Query("api_key") apiKey: String,
         @Path("id") id: Long
-    ): ApiResponse<Movie>
+    ): ApiResponse<MovieInfo>
 }
