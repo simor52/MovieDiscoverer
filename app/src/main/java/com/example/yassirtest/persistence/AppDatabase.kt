@@ -7,7 +7,7 @@ import com.example.yassirtest.model.Movie
 import com.example.yassirtest.model.MovieInfo
 
 @Database(entities = [Movie::class, MovieInfo::class], version = 1, exportSchema = false)
-@TypeConverters(value = [GenreIdsConverter::class])
+@TypeConverters(value = [GenreIdsConverter::class, GenreListConverter::class])
 abstract class AppDatabase : RoomDatabase() {
     abstract fun movieDao(): MovieDao
 }

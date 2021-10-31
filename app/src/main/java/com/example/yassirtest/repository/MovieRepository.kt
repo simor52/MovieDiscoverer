@@ -15,6 +15,7 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.onStart
+import timber.log.Timber
 import javax.inject.Inject
 
 class MovieRepository @Inject constructor(
@@ -41,19 +42,25 @@ class MovieRepository @Inject constructor(
                 val movies = data.results
                 movies.forEach { movie -> movie.page = page }
                 movieDao.insertMovieList(movies)
-                emit(movieDao.getAllMovieList(page))
+                //emit(movieDao.getAllMovieList(page))
             }
                 // handles the case when the API request gets an error response.
                 // e.g., internal server error.
                 .onError {
                     /** maps the [ApiResponse.Failure.Error] to the [MovieErrorResponse] using the mapper. */
-                    map(ErrorResponseMapper) { onError("[Code: $code]: $message") }
+                    map(ErrorResponseMapper) {
+                        Timber.d("[Code: $code]: $message")
+                        onError("Something went wrong.")
+                    }
                 }
                 // handles the case when the API request gets an exception response.
                 // e.g., network connection error.
-                .onException { onError(message) }
+                .onException {
+                    Timber.e(exception)
+                    onError("Something went wrong.")
+                }
         //} else {
-        //    emit(movieDao.getAllMovieList(page))
+            emit(movieDao.getAllMovieList(page))
         //}
     }.onStart { onStart() }.onCompletion { onComplete() }.flowOn(ioDispatcher)
 

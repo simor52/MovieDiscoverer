@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.room.Room
 import com.example.yassirtest.persistence.AppDatabase
 import com.example.yassirtest.persistence.GenreIdsConverter
+import com.example.yassirtest.persistence.GenreListConverter
 import com.example.yassirtest.persistence.MovieDao
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
@@ -29,12 +30,14 @@ object PersistenceModule {
     @Singleton
     fun provideAppDatabase(
         application: Application,
-        genreIdsConverter: GenreIdsConverter
+        genreIdsConverter: GenreIdsConverter,
+        genreListConverter: GenreListConverter,
     ): AppDatabase {
         return Room
-            .databaseBuilder(application, AppDatabase::class.java, "Pokedex.db")
+            .databaseBuilder(application, AppDatabase::class.java, "move.db")
             .fallbackToDestructiveMigration()
             .addTypeConverter(genreIdsConverter)
+            .addTypeConverter(genreListConverter)
             .build()
     }
 
@@ -46,7 +49,13 @@ object PersistenceModule {
 
     @Provides
     @Singleton
-    fun provideTypeResponseConverter(moshi: Moshi): GenreIdsConverter {
+    fun provideTypeGenreIdsConverter(moshi: Moshi): GenreIdsConverter {
         return GenreIdsConverter(moshi)
+    }
+
+    @Provides
+    @Singleton
+    fun provideTypeGenreListConverter(moshi: Moshi): GenreListConverter {
+        return GenreListConverter(moshi)
     }
 }

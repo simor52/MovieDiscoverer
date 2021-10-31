@@ -16,7 +16,7 @@ interface TheMovieDbService {
 
     @GET("movie/{id}")
     suspend fun fetchMovieInfo(
-        @Query("api_key") apiKey: String,
-        @Path("id") id: Long
+        @Path("id") id: Long,
+        @Query("api_key") apiKey: String
     ): ApiResponse<MovieInfo>
 }

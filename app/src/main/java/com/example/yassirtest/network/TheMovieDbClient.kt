@@ -8,5 +8,5 @@ class TheMovieDbClient @Inject constructor(
 ) {
     suspend fun fetchMovieList(page: Int = 1) = theMovieDbService.fetchMovieList(BuildConfig.APIKEY, page)
 
-    suspend fun fetchMovieInfo(id: Long) = theMovieDbService.fetchMovieInfo(BuildConfig.APIKEY, id)
+    suspend fun fetchMovieInfo(id: Long) = theMovieDbService.fetchMovieInfo(id, BuildConfig.APIKEY)
 }

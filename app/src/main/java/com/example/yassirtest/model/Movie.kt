@@ -26,8 +26,4 @@ data class Movie (
         return if (releaseDate.isNullOrEmpty() || releaseDate.length < 4) ""
         else releaseDate.take(4)
     }
-
-    fun getGenresString() : String {
-        return "Action, Aventure"
-    }
 }

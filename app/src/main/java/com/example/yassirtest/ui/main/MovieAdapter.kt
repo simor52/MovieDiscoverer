@@ -3,9 +3,11 @@ package com.example.yassirtest.ui.main
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.NO_POSITION
 import com.example.yassirtest.R
 import com.example.yassirtest.databinding.ItemMovieBinding
 import com.example.yassirtest.model.Movie
+import com.example.yassirtest.ui.detail.DetailActivity
 import com.skydoves.bindables.BindingListAdapter
 import com.skydoves.bindables.binding
 
@@ -25,13 +27,13 @@ class MovieAdapter : BindingListAdapter<Movie, MovieAdapter.MovieViewHolder>(dif
 
         init {
             binding.root.setOnClickListener {
-//                val position = bindingAdapterPosition.takeIf { it != NO_POSITION }
-//                    ?: return@setOnClickListener
-//                val currentClickedAt = SystemClock.elapsedRealtime()
-//                if (currentClickedAt - onClickedAt > binding.transformationLayout.duration) {
-//                    DetailActivity.startActivity(binding.transformationLayout, getItem(position))
-//                    onClickedAt = currentClickedAt
-//                }
+                val position = bindingAdapterPosition.takeIf { it != NO_POSITION }
+                    ?: return@setOnClickListener
+                //val currentClickedAt = SystemClock.elapsedRealtime()
+                //if (currentClickedAt - onClickedAt > binding.transformationLayout.duration) {
+                    DetailActivity.startActivity(it.context, getItem(position))
+                    //onClickedAt = currentClickedAt
+                //}
             }
         }
 

@@ -1,16 +1,19 @@
 package com.example.yassirtest.binding
 
-import android.graphics.Color
-import android.graphics.Typeface
-import android.view.Gravity
+import android.annotation.SuppressLint
 import android.view.View
-import android.view.WindowManager
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.OnBackPressedDispatcherOwner
-import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
+import com.example.yassirtest.R
+import com.example.yassirtest.model.Movie
+import com.example.yassirtest.model.MovieInfo
+import com.example.yassirtest.util.getGenres
+import com.example.yassirtest.util.getGenresString
 
 object ViewBinding {
 
@@ -24,9 +27,12 @@ object ViewBinding {
 
     @JvmStatic
     @BindingAdapter("paletteImage")
-    fun bindLoadImagePalette(view: AppCompatImageView, url: String) {
+    fun bindLoadImagePalette(view: AppCompatImageView, url: String?) {
         Glide.with(view.context)
             .load(url)
+            .placeholder(R.drawable.vector_image_place_holder)
+            .error(R.drawable.vector_image_place_holder)
+            .transition(DrawableTransitionOptions.withCrossFade())
             .into(view)
 //            .listener(
 //                GlidePalette.with(url)
@@ -92,5 +98,19 @@ object ViewBinding {
                 context.onBackPressedDispatcher.onBackPressed()
             }
         }
+    }
+
+    @SuppressLint("SetTextI18n")
+    @JvmStatic
+    @BindingAdapter("genreIds")
+    fun bindGenreIds(view: TextView, movie: Movie) {
+        view.text = "${movie.getReleaseYear()} ${movie.getGenres()}"
+    }
+
+    @SuppressLint("SetTextI18n")
+    @JvmStatic
+    @BindingAdapter("genres")
+    fun bindGenreIds(view: TextView, movie: MovieInfo) {
+        view.text = "${movie.getReleaseYear()} ${movie.getGenresString()}"
     }
 }

@@ -14,6 +14,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.YassirTest">
         <activity
+            android:name=".ui.detail.DetailActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.main.MainActivity"
             android:exported="true"
             android:label="@string/app_name"
@@ -30,7 +33,6 @@
             android:authorities="com.example.yassirtest.androidx-startup"
             android:exported="false"
             tools:node="merge">
-
             <meta-data
                 android:name="com.example.yassirtest.initializer.TimberInitializer"
                 android:value="androidx.startup" />
