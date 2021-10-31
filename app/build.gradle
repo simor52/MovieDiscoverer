@@ -29,6 +29,7 @@ android {
     buildTypes {
         debug {
             minifyEnabled false
+            debuggable true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             buildConfigField "String", "APIKEY", APIKEY
         }
@@ -40,11 +41,11 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_11
-        targetCompatibility JavaVersion.VERSION_11
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
     kotlinOptions {
-        jvmTarget = '11'
+        jvmTarget = '1.8'
         useIR = true
     }
 
@@ -52,7 +53,8 @@ android {
         abortOnError false
     }
     buildFeatures {
-        compose true
+        viewBinding true
+        dataBinding true
     }
     composeOptions {
         kotlinCompilerExtensionVersion compose_version
@@ -84,6 +86,9 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion"
     implementation "androidx.lifecycle:lifecycle-viewmodel-savedstate:$lifecycleVersion"
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycleVersion"
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.3.5'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.3.5'
     testImplementation "androidx.arch.core:core-testing:$archCompomentVersion"
 
     // room
@@ -126,6 +131,18 @@ dependencies {
 
     // debugging
     implementation "com.jakewharton.timber:timber:$timberVersion"
+
+    // binding
+    implementation ("com.github.skydoves:bindables:$bindablesVersion") {
+        exclude group: "com.google.android.material"
+    }
+
+    // glide
+    implementation "com.github.bumptech.glide:glide:$glideVersion"
+    //implementation "com.github.florent37:glidepalette:$versions.glidePaletteVersion"
+    kapt "com.github.bumptech.glide:compiler:$glideVersion"
+
+    implementation "com.github.skydoves:baserecyclerviewadapter:$baseAdapter"
 
     // unit test
     testImplementation "junit:junit:$junitVersion"

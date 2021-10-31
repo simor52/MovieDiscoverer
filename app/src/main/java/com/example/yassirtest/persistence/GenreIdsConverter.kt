@@ -14,14 +14,14 @@ class GenreIdsConverter @Inject constructor(
 
     @TypeConverter
     fun fromString(value: String): List<Int>? {
-        val listType = Types.newParameterizedType(List::class.java, Int::class.java)
+        val listType = Types.newParameterizedType(List::class.java, Integer::class.java)
         val adapter: JsonAdapter<List<Int>> = moshi.adapter(listType)
         return adapter.fromJson(value)
     }
 
     @TypeConverter
     fun fromGenreIds(type: List<Int>?): String {
-        val listType = Types.newParameterizedType(List::class.java, Int::class.java)
+        val listType = Types.newParameterizedType(List::class.java, Integer::class.java)
         val adapter: JsonAdapter<List<Int>> = moshi.adapter(listType)
         return adapter.toJson(type)
     }

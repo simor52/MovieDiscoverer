@@ -30,15 +30,15 @@ class MovieRepository @Inject constructor(
         onComplete: () -> Unit,
         onError: (String?) -> Unit
     ) = flow {
-        var movies = movieDao.getMovieList(page)
-        if (movies.isEmpty()) {
+        //var movies = movieDao.getMovieList(page)
+        //if (movies.isEmpty()) {
             /**
              * fetches a list of [Movie] from the network and getting [ApiResponse] asynchronously.
              * @see [suspendOnSuccess](https://github.com/skydoves/sandwich#suspendonsuccess-suspendonerror-suspendonexception)
              */
             val response = movieClient.fetchMovieList(page = page)
             response.suspendOnSuccess {
-                movies = data.results
+                val movies = data.results
                 movies.forEach { movie -> movie.page = page }
                 movieDao.insertMovieList(movies)
                 emit(movieDao.getAllMovieList(page))
@@ -52,9 +52,9 @@ class MovieRepository @Inject constructor(
                 // handles the case when the API request gets an exception response.
                 // e.g., network connection error.
                 .onException { onError(message) }
-        } else {
-            emit(movieDao.getAllMovieList(page))
-        }
+        //} else {
+        //    emit(movieDao.getAllMovieList(page))
+        //}
     }.onStart { onStart() }.onCompletion { onComplete() }.flowOn(ioDispatcher)
 
 
