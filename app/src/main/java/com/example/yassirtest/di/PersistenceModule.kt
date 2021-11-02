@@ -34,7 +34,7 @@ object PersistenceModule {
         genreListConverter: GenreListConverter,
     ): AppDatabase {
         return Room
-            .databaseBuilder(application, AppDatabase::class.java, "move.db")
+            .databaseBuilder(application, AppDatabase::class.java, "movie.db")
             .fallbackToDestructiveMigration()
             .addTypeConverter(genreIdsConverter)
             .addTypeConverter(genreListConverter)
@@ -43,7 +43,7 @@ object PersistenceModule {
 
     @Provides
     @Singleton
-    fun providePokemonDao(appDatabase: AppDatabase): MovieDao {
+    fun provideMovieDao(appDatabase: AppDatabase): MovieDao {
         return appDatabase.movieDao()
     }
 

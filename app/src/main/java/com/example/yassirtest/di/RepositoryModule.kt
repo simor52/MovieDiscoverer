@@ -1,6 +1,7 @@
 package com.example.yassirtest.di
 
 import com.example.yassirtest.network.TheMovieDbClient
+import com.example.yassirtest.persistence.AppDatabase
 import com.example.yassirtest.persistence.MovieDao
 import com.example.yassirtest.repository.MovieRepository
 import dagger.Module
@@ -18,9 +19,9 @@ object RepositoryModule {
     @ViewModelScoped
     fun provideMainRepository(
         theMovieDbClient: TheMovieDbClient,
-        movieDao: MovieDao,
+        movieDb: AppDatabase,
         coroutineDispatcher: CoroutineDispatcher
     ): MovieRepository {
-        return MovieRepository(theMovieDbClient, movieDao, coroutineDispatcher)
+        return MovieRepository(theMovieDbClient, movieDb, coroutineDispatcher)
     }
 }

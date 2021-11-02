@@ -1,5 +1,6 @@
 package com.example.yassirtest.persistence
 
+import androidx.paging.PagingSource
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -12,11 +13,11 @@ interface MovieDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertMovieList(movieList: List<Movie>)
 
-    @Query("SELECT * FROM Movie WHERE page = :page_ ORDER BY popularity DESC")
-    suspend fun getMovieList(page_: Int): List<Movie>
+    @Query("SELECT * FROM Movie ORDER BY popularity DESC")
+    fun getMovieList(): PagingSource<Int, Movie>
 
-    @Query("SELECT * FROM Movie WHERE page <= :page_ ORDER BY popularity DESC")
-    suspend fun getAllMovieList(page_: Int): List<Movie>
+    @Query("DELETE FROM Movie")
+    suspend fun clearMovies()
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertMovieInfo(movieInfo: MovieInfo)

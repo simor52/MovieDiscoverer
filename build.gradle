@@ -25,6 +25,8 @@ buildscript {
         constraintVersion    = '2.0.4'
         appCompat            = '1.3.1'
         coreKtx              = '1.6.0'
+        pagingVersion        = '3.1.0-beta01'
+
 
         // architecture components
         fragmentVersion      = '1.3.0'

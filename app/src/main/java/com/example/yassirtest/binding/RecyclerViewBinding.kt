@@ -1,7 +1,12 @@
 package com.example.yassirtest.binding
 
 import androidx.databinding.BindingAdapter
+import androidx.lifecycle.ViewTreeLifecycleOwner
+import androidx.lifecycle.lifecycleScope
+import androidx.paging.PagingData
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.example.yassirtest.model.Movie
 import com.example.yassirtest.ui.main.MainViewModel
 import com.skydoves.baserecyclerviewadapter.RecyclerViewPaginator
 import com.skydoves.bindables.BindingListAdapter
@@ -18,20 +23,11 @@ object RecyclerViewBinding {
 
     @JvmStatic
     @BindingAdapter("submitList")
-    fun bindSubmitList(view: RecyclerView, itemList: List<Any>?) {
-        (view.adapter as BindingListAdapter<Any, *>).submitList(itemList)
-    }
-
-    @JvmStatic
-    @BindingAdapter("paginationMovieList")
-    fun paginationPokemonList(view: RecyclerView, viewModel: MainViewModel) {
-        RecyclerViewPaginator(
-            recyclerView = view,
-            isLoading = { viewModel.isLoading },
-            loadMore = { viewModel.fetchNextmovieList() },
-            onLast = { false }
-        ).run {
-            threshold = 8
+    fun bindSubmitList(view: RecyclerView, itemList: PagingData<Movie>?) {
+        itemList?.let {
+            ViewTreeLifecycleOwner.get(view)?.lifecycleScope?.launchWhenStarted {
+                (view.adapter as PagingDataAdapter<Movie, *>).submitData(it)
+            }
         }
     }
 }

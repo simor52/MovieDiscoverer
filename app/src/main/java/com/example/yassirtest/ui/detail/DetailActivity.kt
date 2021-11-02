@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.annotation.VisibleForTesting
 import com.example.yassirtest.R
@@ -33,6 +34,16 @@ class DetailActivity : BindingActivity<ActivityDetailBinding>(R.layout.activity_
         binding {
             vm = viewModel
         }
+
+        setSupportActionBar(binding.toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.title = null
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if(item.itemId == android.R.id.home)
+            onBackPressed()
+        return super.onOptionsItemSelected(item)
     }
 
     companion object {

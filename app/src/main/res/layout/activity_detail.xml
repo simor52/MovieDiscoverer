@@ -46,11 +46,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <include
-            layout="@layout/include_error_view"
-            android:visibility="gone"
-            app:isGone="@{vm.loading || vm.movieInfo != null}"
-            app:vm="@{vm}" />
+
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline2"
@@ -59,7 +55,7 @@
             android:orientation="horizontal"
             app:layout_constraintGuide_percent=".5" />
 
-        <androidx.appcompat.widget.AppCompatImageView
+        <com.google.android.material.card.MaterialCardView
             android:id="@+id/imageView4"
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -67,15 +63,24 @@
             android:layout_marginTop="24dp"
             android:layout_marginEnd="32dp"
             android:layout_marginBottom="24dp"
-            android:scaleType="centerCrop"
-            app:srcCompat="@drawable/vector_image_place_holder"
-            app:paletteImage="@{vm.movieInfo.getPosterUrl()}"
+            app:cardCornerRadius="16dp"
+            app:cardPreventCornerOverlap="true"
+            app:cardElevation="16dp"
             app:layout_constraintBottom_toTopOf="@+id/guideline2"
             app:layout_constraintDimensionRatio="2:3"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
-            tools:srcCompat="@tools:sample/avatars" />
+            app:gone="@{vm.loading || vm.movieInfo == null}">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                app:srcCompat="@drawable/vector_image_place_holder"
+                app:paletteImage="@{vm.movieInfo.getPosterUrl()}"
+                tools:srcCompat="@tools:sample/avatars"/>
+        </com.google.android.material.card.MaterialCardView>
 
         <TextView
             android:id="@+id/textView6"
@@ -89,6 +94,8 @@
             tools:text="Convergence: Courage in a Crisis"
             android:textAppearance="@style/TextAppearance.AppCompat.Headline"
             android:textAlignment="center"
+            android:maxLines="2"
+            android:ellipsize="end"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/guideline2" />
@@ -98,15 +105,18 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="16dp"
             android:layout_marginEnd="32dp"
+            android:textAlignment="center"
             android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
             android:textColor="?android:textColorSecondary"
-            tools:text="2020  Action, Aventure"
-            android:textAlignment="center"
+            android:maxLines="1"
+            android:ellipsize="end"
+            app:genres="@{vm.movieInfo}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView6" />
+            app:layout_constraintTop_toBottomOf="@+id/textView6"
+            tools:text="2020  Action, Aventure" />
 
         <TextView
             android:id="@+id/textView10"
@@ -120,6 +130,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/imageView6"
             app:layout_constraintTop_toBottomOf="@+id/textView7"
+            app:gone="@{vm.loading || vm.movieInfo == null}"
             tools:text="6.5/10" />
 
         <ImageView
@@ -135,14 +146,15 @@
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/textView10"
-            app:srcCompat="@drawable/ic_baseline_star_rate_24" />
+            app:srcCompat="@drawable/ic_baseline_star_rate_24"
+            app:gone="@{vm.loading || vm.movieInfo == null}"/>
 
         <com.example.yassirtest.ui.ReadMoreTextView
             android:id="@+id/textView11"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginStart="32dp"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="24dp"
             android:layout_marginEnd="32dp"
             android:layout_marginBottom="16dp"
             android:text="@{vm.movieInfo.overview}"
@@ -166,7 +178,13 @@
             android:text="View on IMDB"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:gone="@{vm.loading || vm.movieInfo == null}"/>
+
+        <include
+            layout="@layout/include_error_view"
+            app:isGone="@{vm.loading || vm.movieInfo != null}"
+            app:vm="@{vm}" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

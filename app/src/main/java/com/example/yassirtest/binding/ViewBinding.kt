@@ -34,50 +34,8 @@ object ViewBinding {
             .error(R.drawable.vector_image_place_holder)
             .transition(DrawableTransitionOptions.withCrossFade())
             .into(view)
-//            .listener(
-//                GlidePalette.with(url)
-//                    .use(BitmapPalette.Profile.MUTED_LIGHT)
-//                    .intoCallBack { palette ->
-//                        val rgb = palette?.dominantSwatch?.rgb
-//                        if (rgb != null) {
-//                            paletteCard.setCardBackgroundColor(rgb)
-//                        }
-//                    }.crossfade(true)
-//            ).into(view)
     }
 
-//    @JvmStatic
-//    @BindingAdapter("paletteImage", "paletteView")
-//    fun bindLoadImagePaletteView(view: AppCompatImageView, url: String) {
-//        val context = view.context
-//        Glide.with(context)
-//            .load(url)
-//            .into(view)
-////            .listener(
-////                GlidePalette.with(url)
-////                    .use(BitmapPalette.Profile.MUTED_LIGHT)
-////                    .intoCallBack { palette ->
-////                        val light = palette?.lightVibrantSwatch?.rgb
-////                        val domain = palette?.dominantSwatch?.rgb
-////                        if (domain != null) {
-////                            if (light != null) {
-////                                Rainbow(paletteView).palette {
-////                                    +color(domain)
-////                                    +color(light)
-////                                }.background(orientation = RainbowOrientation.TOP_BOTTOM)
-////                            } else {
-////                                paletteView.setBackgroundColor(domain)
-////                            }
-////                            if (context is AppCompatActivity) {
-////                                context.window.apply {
-////                                    addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-////                                    statusBarColor = domain
-////                                }
-////                            }
-////                        }
-////                    }.crossfade(true)
-////            )
-//    }
 
     @JvmStatic
     @BindingAdapter("gone")
@@ -110,7 +68,9 @@ object ViewBinding {
     @SuppressLint("SetTextI18n")
     @JvmStatic
     @BindingAdapter("genres")
-    fun bindGenreIds(view: TextView, movie: MovieInfo) {
-        view.text = "${movie.getReleaseYear()} ${movie.getGenresString()}"
+    fun bindGenres(view: TextView, movie: MovieInfo?) {
+        movie?.let {
+            view.text = "${it.getReleaseYear()} ${it.getGenresString()}"
+        }
     }
 }

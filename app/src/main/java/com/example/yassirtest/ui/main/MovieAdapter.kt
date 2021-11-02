@@ -1,6 +1,7 @@
 package com.example.yassirtest.ui.main
 
 import android.view.ViewGroup
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.NO_POSITION
@@ -11,9 +12,7 @@ import com.example.yassirtest.ui.detail.DetailActivity
 import com.skydoves.bindables.BindingListAdapter
 import com.skydoves.bindables.binding
 
-class MovieAdapter : BindingListAdapter<Movie, MovieAdapter.MovieViewHolder>(diffUtil) {
-
-    private var onClickedAt = 0L
+class MovieAdapter : PagingDataAdapter<Movie, MovieAdapter.MovieViewHolder>(diffUtil) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder =
         parent.binding<ItemMovieBinding>(R.layout.item_movie).let(::MovieViewHolder)
@@ -29,16 +28,12 @@ class MovieAdapter : BindingListAdapter<Movie, MovieAdapter.MovieViewHolder>(dif
             binding.root.setOnClickListener {
                 val position = bindingAdapterPosition.takeIf { it != NO_POSITION }
                     ?: return@setOnClickListener
-                //val currentClickedAt = SystemClock.elapsedRealtime()
-                //if (currentClickedAt - onClickedAt > binding.transformationLayout.duration) {
-                    DetailActivity.startActivity(it.context, getItem(position))
-                    //onClickedAt = currentClickedAt
-                //}
+                    DetailActivity.startActivity(it.context, getItem(position)!!)
             }
         }
 
-        fun bindMovie(Movie: Movie) {
-            binding.movie = Movie
+        fun bindMovie(movie: Movie?) {
+            binding.movie = movie
             binding.executePendingBindings()
         }
     }
