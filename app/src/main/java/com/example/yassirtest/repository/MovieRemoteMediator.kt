@@ -24,10 +24,7 @@ class MovieRemoteMediator(
 
             //when it's the first time we're loading data
             //or when PagingDataAdapter.refresh() is called
-            LoadType.REFRESH -> {
-                val remoteKeys = getRemoteKeyClosestToCurrentPosition(state)
-                remoteKeys?.nextKey?.minus(1) ?: 1
-            }
+            LoadType.REFRESH -> 1
             //When we need to load data at the beginning of the currently loaded data set:
             LoadType.PREPEND -> {
                 return MediatorResult.Success(endOfPaginationReached = true)
@@ -35,8 +32,16 @@ class MovieRemoteMediator(
             //When we need to load data at the end of the currently loaded data set:
             LoadType.APPEND -> {
                 val remoteKeys = getRemoteKeyForLastItem(state)
-                    ?: return MediatorResult.Success(endOfPaginationReached = false)
-                remoteKeys.nextKey ?: return MediatorResult.Success(endOfPaginationReached = true)
+
+                if(remoteKeys == null)
+                    MediatorResult.Success(endOfPaginationReached = false)
+                remoteKeys?.nextKey ?: return MediatorResult.Success(endOfPaginationReached = false)
+//                val lastItem = state.lastItemOrNull()
+//                if (lastItem == null) {
+//                    return MediatorResult.Success(endOfPaginationReached = true)
+//                }
+//
+//                lastItem.page + 1
             }
         }
 
@@ -53,12 +58,15 @@ class MovieRemoteMediator(
                 val prevKey = if (page == 1) null else page - 1
                 val nextKey = if (endOfPaginationReached) null else page + 1
                 val keys = movies.map {
+                    it.page = page
                     RemoteKeys(movieId = it.id, prevKey = prevKey, nextKey = nextKey)
                 }
-                movieDatabase.remoteKeysDao().insertAll(keys)
                 movieDatabase.movieDao().insertMovieList(movies)
+                movieDatabase.remoteKeysDao().insertAll(keys)
             }
+
             return MediatorResult.Success(endOfPaginationReached = endOfPaginationReached)
+
         } catch (exception: IOException) {
             return MediatorResult.Error(exception)
         } catch (exception: HttpException) {
