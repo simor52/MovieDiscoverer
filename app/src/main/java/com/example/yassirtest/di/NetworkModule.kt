@@ -3,7 +3,7 @@ package com.example.yassirtest.di
 import com.example.yassirtest.network.HttpRequestInterceptor
 import com.example.yassirtest.network.TheMovieDbClient
 import com.example.yassirtest.network.TheMovieDbService
-import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
+import com.skydoves.sandwich.coroutines.CoroutinesResponseCallAdapterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -32,7 +32,7 @@ object NetworkModule {
             .client(okHttpClient)
             .baseUrl("https://api.themoviedb.org/3/")
             .addConverterFactory(MoshiConverterFactory.create())
-            .addCallAdapterFactory(CoroutineCallAdapterFactory())
+            .addCallAdapterFactory(CoroutinesResponseCallAdapterFactory.create())
             .build()
     }
 

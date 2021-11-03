@@ -14,7 +14,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.YassirTest">
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.detail.DetailActivity"
+            android:exported="false"
+            android:theme="@style/Theme.YassirTest.NoActionBar"/>
+        <activity
+            android:name=".ui.main.MainActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.YassirTest.NoActionBar">
@@ -30,7 +34,6 @@
             android:authorities="com.example.yassirtest.androidx-startup"
             android:exported="false"
             tools:node="merge">
-
             <meta-data
                 android:name="com.example.yassirtest.initializer.TimberInitializer"
                 android:value="androidx.startup" />

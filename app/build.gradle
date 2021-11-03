@@ -29,6 +29,7 @@ android {
     buildTypes {
         debug {
             minifyEnabled false
+            debuggable true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             buildConfigField "String", "APIKEY", APIKEY
         }
@@ -47,11 +48,13 @@ android {
         jvmTarget = '1.8'
         useIR = true
     }
+
     lintOptions {
         abortOnError false
     }
     buildFeatures {
-        compose true
+        viewBinding true
+        dataBinding true
     }
     composeOptions {
         kotlinCompilerExtensionVersion compose_version
@@ -83,11 +86,14 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion"
     implementation "androidx.lifecycle:lifecycle-viewmodel-savedstate:$lifecycleVersion"
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycleVersion"
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+    implementation "androidx.paging:paging-runtime:$pagingVersion"
     testImplementation "androidx.arch.core:core-testing:$archCompomentVersion"
 
     // room
     implementation "androidx.room:room-runtime:$roomVersion"
     implementation "androidx.room:room-ktx:$roomVersion"
+    implementation 'androidx.room:room-paging:2.4.0-beta01'
     kapt "androidx.room:room-compiler:$roomVersion"
 
     // compose
@@ -125,6 +131,18 @@ dependencies {
 
     // debugging
     implementation "com.jakewharton.timber:timber:$timberVersion"
+
+    // binding
+    implementation ("com.github.skydoves:bindables:$bindablesVersion") {
+        exclude group: "com.google.android.material"
+    }
+
+    // glide
+    implementation "com.github.bumptech.glide:glide:$glideVersion"
+    //implementation "com.github.florent37:glidepalette:$versions.glidePaletteVersion"
+    kapt "com.github.bumptech.glide:compiler:$glideVersion"
+
+    implementation "com.github.skydoves:baserecyclerviewadapter:$baseAdapter"
 
     // unit test
     testImplementation "junit:junit:$junitVersion"
