@@ -2,6 +2,7 @@ package com.example.yassirtest.ui.detail
 
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
@@ -33,6 +34,7 @@ class DetailActivity : BindingActivity<ActivityDetailBinding>(R.layout.activity_
         super.onCreate(savedInstanceState)
         binding {
             vm = viewModel
+            activity = this@DetailActivity
         }
 
         setSupportActionBar(binding.toolbar)
@@ -44,6 +46,13 @@ class DetailActivity : BindingActivity<ActivityDetailBinding>(R.layout.activity_
         if(item.itemId == android.R.id.home)
             onBackPressed()
         return super.onOptionsItemSelected(item)
+    }
+
+    fun navigateToImbdLink() {
+        val linkIntent = Intent(Intent.ACTION_VIEW).apply {
+            data = Uri.parse("https://www.imdb.com/title/${viewModel.movieInfo?.imdbId}")
+        }
+        startActivity(linkIntent);
     }
 
     companion object {

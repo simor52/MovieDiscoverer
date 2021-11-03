@@ -12,7 +12,7 @@ import com.example.yassirtest.ui.detail.DetailActivity
 import com.skydoves.bindables.BindingListAdapter
 import com.skydoves.bindables.binding
 
-class MovieAdapter : PagingDataAdapter<Movie, MovieAdapter.MovieViewHolder>(diffUtil) {
+class MovieAdapter(private val retry: () -> Unit) : PagingDataAdapter<Movie, MovieAdapter.MovieViewHolder>(diffUtil) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder =
         parent.binding<ItemMovieBinding>(R.layout.item_movie).let(::MovieViewHolder)
@@ -30,6 +30,8 @@ class MovieAdapter : PagingDataAdapter<Movie, MovieAdapter.MovieViewHolder>(diff
                     ?: return@setOnClickListener
                     DetailActivity.startActivity(it.context, getItem(position)!!)
             }
+
+            withLoadStateFooter(MovieLoadStateAdapter(retry))
         }
 
         fun bindMovie(movie: Movie?) {

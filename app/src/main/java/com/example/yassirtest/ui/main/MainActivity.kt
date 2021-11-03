@@ -26,7 +26,7 @@ class MainActivity : BindingActivity<ActivityMainBinding>(R.layout.activity_main
             window.statusBarColor = Color.WHITE
         }
         binding {
-            adapter = MovieAdapter()
+            adapter = MovieAdapter({ viewModel.refresh() })
             vm = viewModel
         }
         setSupportActionBar(binding.toolbar)

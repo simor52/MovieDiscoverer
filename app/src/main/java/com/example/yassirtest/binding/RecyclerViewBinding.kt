@@ -8,6 +8,7 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.yassirtest.model.Movie
 import com.example.yassirtest.ui.main.MainViewModel
+import com.example.yassirtest.ui.main.MovieLoadStateAdapter
 import com.skydoves.baserecyclerviewadapter.RecyclerViewPaginator
 import com.skydoves.bindables.BindingListAdapter
 

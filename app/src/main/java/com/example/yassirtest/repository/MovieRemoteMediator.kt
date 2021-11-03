@@ -30,26 +30,13 @@ class MovieRemoteMediator(
             }
             //When we need to load data at the beginning of the currently loaded data set:
             LoadType.PREPEND -> {
-                val remoteKeys = getRemoteKeyForFirstItem(state)
-                if (remoteKeys == null) {
-                    // The LoadType is PREPEND so some data was loaded before,
-                    // so we should have been able to get remote keys
-                    // If the remoteKeys are null, then we're an invalid state and we have a bug
-                    return MediatorResult.Success(endOfPaginationReached = true)                }
-                // If the previous key is null, then we can't request more data
-                val prevKey = remoteKeys.prevKey
-                if (prevKey == null) {
-                    return MediatorResult.Success(endOfPaginationReached = true)
-                }
-                remoteKeys.prevKey
+                return MediatorResult.Success(endOfPaginationReached = true)
             }
             //When we need to load data at the end of the currently loaded data set:
             LoadType.APPEND -> {
                 val remoteKeys = getRemoteKeyForLastItem(state)
-                if (remoteKeys == null || remoteKeys.nextKey == null) {
-                    throw InvalidObjectException("Remote key should not be null for $loadType")
-                }
-                remoteKeys.nextKey
+                    ?: return MediatorResult.Success(endOfPaginationReached = false)
+                remoteKeys.nextKey ?: return MediatorResult.Success(endOfPaginationReached = true)
             }
         }
 

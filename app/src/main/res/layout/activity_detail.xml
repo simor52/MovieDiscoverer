@@ -8,6 +8,9 @@
         <variable
             name="vm"
             type="com.example.yassirtest.ui.detail.DetailViewModel" />
+        <variable
+            name="activity"
+            type="com.example.yassirtest.ui.detail.DetailActivity" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -176,6 +179,7 @@
             android:layout_marginEnd="32dp"
             android:layout_marginBottom="24dp"
             android:text="View on IMDB"
+            android:onClick="@{() -> activity.navigateToImbdLink()}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
